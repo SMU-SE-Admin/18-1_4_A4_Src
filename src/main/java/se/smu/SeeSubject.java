@@ -3,12 +3,14 @@ package se.smu;
 import java.awt.Color;
 
 import javax.swing.*;
+
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -22,10 +24,11 @@ import javax.swing.table.DefaultTableModel;
 public class SeeSubject extends JFrame implements MouseListener {
 
 	public JPanel contentPane;
-
-	public JTable table, table1;
+	int row, row2;
+	String value_1, value_2;
+	private JTable table, table1;
 	JScrollPane scroll;
-	public JButton button_2;
+	public JButton button_2, button_3;
 	String colNames[] = { "과목명", "교수명", "요일", "시간", "년도", "학기" };
 	DefaultTableModel SubjectTable = new DefaultTableModel(colNames, 0);
 	String colNames2[] = { "항목", "마감기한", "완료여부", "실제마감일", "진행률", "중요도" };
@@ -35,12 +38,6 @@ public class SeeSubject extends JFrame implements MouseListener {
 	ResultSet rs = null;
 	String sql = null;
 	PreparedStatement pstmt = null;
-
-	Connection conn2 = null;
-	Statement stmt2 = null;
-	ResultSet rs2 = null;
-	String sql2 = null;
-	PreparedStatement pstmt2 = null;
 
 	/**
 	 * Launch the application.
@@ -109,11 +106,44 @@ public class SeeSubject extends JFrame implements MouseListener {
 		button_2.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
 		contentPane.add(button_2);
 
-		table1 = new JTable(SubjectTable);
+		table = new JTable(TodoTable);
 
+		table1 = new JTable(SubjectTable);
+		table.addMouseListener(this);
 		JScrollPane scrollPane = new JScrollPane(table1);
 		scrollPane.setBounds(24, 53, 469, 184);
 		contentPane.add(scrollPane);
+		table1.addMouseListener(this);
+
+		button_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Class.forName("com.mysql.jdbc.Driver");
+					// Open a connection
+					conn = DriverManager.getConnection("jdbc:mysql://localhost/mydb", "root", "root");
+					stmt = conn.createStatement();
+
+					if (value_1 != null) {
+						sql = "delete from Subject where Subjectname='" + value_1 + "';";
+						stmt.executeUpdate(sql);
+						JOptionPane.showMessageDialog(null, "삭제되었습니다.");
+						SubjectTable.removeRow(row);
+						value_1 = null;
+
+					} else {
+						JOptionPane.showMessageDialog(null, "삭제할 과목이 선택되지 않았습니다.");
+						System.out.print(value_1);
+
+					}
+
+				} catch (Exception ee) {
+					System.out.println("문제있음");
+					ee.printStackTrace();
+				}
+
+			}
+
+		});
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
@@ -121,7 +151,11 @@ public class SeeSubject extends JFrame implements MouseListener {
 				frame.setVisible(true);
 			}
 		});
+		Connection conn = null;
 
+		ResultSet rs = null;
+		String sql = null;
+		PreparedStatement pstmt = null;
 		try {
 
 			Class.forName("com.mysql.jdbc.Driver");
@@ -129,12 +163,15 @@ public class SeeSubject extends JFrame implements MouseListener {
 			conn = DriverManager.getConnection("jdbc:mysql://localhost/mydb", "root", "root");
 			stmt = conn.createStatement();
 
+			System.out.println("테이블을 생성했습니다.");
+
 			sql = "select Subjectname,Professor,day,time,year,semester from Subject ;";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 
-			// 중복체크
+			// 이미 id 존재할 경우
 			while (rs.next()) {
+
 				SubjectTable.addRow(new Object[] { rs.getString("Subjectname"), rs.getString(2), rs.getString(3),
 						rs.getString(4), rs.getString(5), rs.getString(6) });
 
@@ -144,36 +181,9 @@ public class SeeSubject extends JFrame implements MouseListener {
 			ee.printStackTrace();
 		}
 
-		table = new JTable(TodoTable);
-		table.addMouseListener(this);
-
 		scroll = new JScrollPane(table);
 		scroll.setBounds(22, 304, 471, 213);
 		contentPane.add(scroll);
-
-		try {
-
-			Class.forName("com.mysql.jdbc.Driver");
-			// Open a connection
-			conn2 = DriverManager.getConnection("jdbc:mysql://localhost/mydb", "root", "root");
-			stmt2 = conn2.createStatement();
-			System.out.println("테이블을 생성했습니다.");
-
-			sql2 = "select Todoname,Deadline,finish,realdeadline,progressrate,importance from Todo ;";
-			pstmt2 = conn2.prepareStatement(sql2);
-			rs2 = pstmt2.executeQuery();
-
-			// 이미 id 존재할 경우
-			while (rs2.next()) {
-				
-				TodoTable.addRow(new Object[] { rs2.getString(1), rs2.getString(2), rs2.getString(3), rs2.getString(4),
-						rs2.getString(5), rs2.getString(6) });
-
-			}
-		} catch (Exception ee) {
-			System.out.println("문제있음");
-			ee.printStackTrace();
-		}
 
 		JPanel panel = new JPanel();
 		panel.setBounds(22, 241, 471, 51);
@@ -203,52 +213,106 @@ public class SeeSubject extends JFrame implements MouseListener {
 			}
 		});
 
-		JButton button_3 = new JButton("-");
+		button_3 = new JButton("-");
 		button_3.setBounds(416, 6, 41, 39);
+
+		button_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Connection conn = null;
+				Statement stmt = null;
+
+				String sql = null;
+
+				try {
+					Class.forName("com.mysql.jdbc.Driver");
+					// Open a connection
+					conn = DriverManager.getConnection("jdbc:mysql://localhost/mydb", "root", "root");
+					stmt = conn.createStatement();
+					System.out.println("테이블을 생성했습니다.");
+					if (value_2 != null) {
+						sql = "delete from Todo where Todoname='" + value_2 + "';";
+						stmt.executeUpdate(sql);
+						JOptionPane.showMessageDialog(null, "삭제되었습니다.");
+						TodoTable.removeRow(row2);
+						value_2 = null;
+
+					} else {
+						JOptionPane.showMessageDialog(null, "삭제할 항목이 선택되지 않았습니다.");
+						System.out.print(value_2);
+
+					}
+
+				} catch (Exception ee) {
+					System.out.println("문제있음");
+					ee.printStackTrace();
+				}
+
+			}
+
+		});
+
 		panel.add(button_3);
+		JButton btnNewButton_2 = new JButton("수정");
+		btnNewButton_2.setBounds(310, 6, 60, 39);
+		panel.add(btnNewButton_2);
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				ModTodo frame;
+				try {
+					frame = new ModTodo();
+					frame.setVisible(true);
+				} catch (ParseException e1) {
+
+					e1.printStackTrace();
+				}
+
+			}
+		});
 
 	}
 
-	@Override
 	public void mouseClicked(MouseEvent e) {
+		if (e.getSource().equals(table1)) {
+			row = table1.getSelectedRow();
+			value_1 = (String) table1.getValueAt(row, 0);
+		} else {
 
-		Object value_1 = null;
-		int row_1 = -1;
-
-		//
-		if (e.getSource().equals(table)) {
-			row_1 = table.getSelectedRow();
-			value_1 = table.getValueAt(row_1, 1);
+			row2 = table.getSelectedRow();
+			value_2 = (String) table.getValueAt(row2, 0);
 		}
-		// db연결
+		Connection conn = null;
+
+		ResultSet rs = null;
+		String sql = null;
+		PreparedStatement pstmt = null;
 		try {
 
 			Class.forName("com.mysql.jdbc.Driver");
 			// Open a connection
 			conn = DriverManager.getConnection("jdbc:mysql://localhost/mydb", "root", "root");
 			stmt = conn.createStatement();
-			System.out.println("테이블을 생성했습니다.");
 
-			// 등록 버튼
-			if (e.getSource().equals(button_2)) {
+			sql = "select Todoname,deadline,finish,realdeadline,progressrate,importance from Todo where Subjectname='"
+					+ value_1 + "' ;";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			TodoTable.setNumRows(0);
 
-				if (value_1 == null)
-					JOptionPane.showMessageDialog(null, "삭제할 과목이 선택되지 않았습니다.");
-				else {
-					sql = "select Todoname,deadline,finish,realdeadline,progressrate,importance from Todo where Subjectname='"
-							+ value_1 + "';";
+			// 이미 id 존재할 경우
+			while (rs.next()) {
 
-					rs = stmt.executeQuery(sql);
-					table1.remove(row_1);
+				TodoTable.addRow(new Object[] { rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4),
+						rs.getString(5), rs.getString(6) });
 
-				}
 			}
+
 		} catch (Exception ee) {
 			System.out.println("문제있음");
 			ee.printStackTrace();
 		}
+
 	}
-	// TODO Auto-generated method stub
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
