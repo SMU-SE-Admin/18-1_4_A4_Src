@@ -154,12 +154,13 @@ public class JoinMembership extends JFrame implements MouseListener {
 			conn = DriverManager.getConnection("jdbc:mysql://localhost/mydb", "root", "root");
 			stmt = conn.createStatement();
 			// 테이블 생성 전이면 주석 풀기
-			sql = "create table DB(name varchar(20), id varchar(20) primary key, pw varchar(20) not null);";
-			stmt.executeUpdate(sql);
-			System.out.println("테이블을 생성했습니다.");
+			
 
 			// 등록 버튼
 			if (e.getSource().equals(btnNewButton)) {
+				sql = "create table DB(name varchar(20), id varchar(20) primary key, pw varchar(20) not null);";
+				stmt.executeUpdate(sql);
+				System.out.println("테이블을 생성했습니다.");
 				sql = "select * from DB where id ='" + txtId.getText() + "';";
 
 				rs = stmt.executeQuery(sql);
