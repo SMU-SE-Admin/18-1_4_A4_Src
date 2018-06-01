@@ -202,9 +202,9 @@ public class AddTodo extends JFrame {
 						conn = DriverManager.getConnection("jdbc:mysql://localhost/mydb", "root", "root");
 						stmt = conn.createStatement();
 						// 테이블 생성
-						sql = "create table Todo(Todoname varchar(20), Subjectname varchar(20), Deadline varchar(20) ,Realdeadline varchar(20), Importance varchar(20),finish varchar(20),Progressrate varchar(20),foreign key(Subjectname) references Subject(Subjectname) on update cascade);";
-						stmt.executeUpdate(sql);
-						System.out.println("테이블을 생성했습니다.");
+						//sql = "create table Todo(Todoname varchar(20), Subjectname varchar(20), Deadline varchar(20) ,Realdeadline varchar(20), Importance varchar(20),finish varchar(20),Progressrate varchar(20),foreign key(Subjectname) references Subject(Subjectname) on update cascade);";
+						//stmt.executeUpdate(sql);
+						//System.out.println("테이블을 생성했습니다.");
 
 						if (e.getSource().equals(okbutton)) {
 							sql = "select * from Todo where Subjectname ='" + textField.getText() + "';";
