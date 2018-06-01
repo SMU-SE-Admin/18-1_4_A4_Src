@@ -24,9 +24,9 @@ import java.awt.Color;
 @SuppressWarnings("serial")
 public class AddLecture extends JFrame {
 
-   private JPanel contentPane;
-   private JTextField textField;
-   private JTextField textField_1;
+   public JPanel contentPane;
+   public JTextField textField;
+   public JTextField textField_1;
 
    /**
     * Launch the application.
@@ -150,9 +150,9 @@ public class AddLecture extends JFrame {
     	      conn = DriverManager.getConnection("jdbc:mysql://localhost/mydb", "root", "root");
     	      stmt = conn.createStatement();
     	      //테이블 생성
-    	      sql = "create table Subject(Subjectname varchar(20), Professor varchar(20), day varchar(20) ,time varchar(20), year varchar(20),semester varchar(20), primary key(Subjectname));";
-    	      stmt.executeUpdate(sql);
-    	      System.out.println("테이블을 생성했습니다.");
+    	      //sql = "create table Subject(Subjectname varchar(20), Professor varchar(20), day varchar(20) ,time varchar(20), year varchar(20),semester varchar(20), primary key(Subjectname));";
+    	      //stmt.executeUpdate(sql);
+    	      //System.out.println("테이블을 생성했습니다.");
     	      
     	      //등록 버튼
     	      if(e.getSource().equals(button)) {
