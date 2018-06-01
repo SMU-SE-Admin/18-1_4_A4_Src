@@ -158,9 +158,9 @@ public class JoinMembership extends JFrame implements MouseListener {
 
 			// 등록 버튼
 			if (e.getSource().equals(btnNewButton)) {
-				sql = "create table DB(name varchar(20), id varchar(20) primary key, pw varchar(20) not null);";
-				stmt.executeUpdate(sql);
-				System.out.println("테이블을 생성했습니다.");
+				//sql = "create table DB(name varchar(20), id varchar(20) primary key, pw varchar(20) not null);";
+				//stmt.executeUpdate(sql);
+				//System.out.println("테이블을 생성했습니다.");
 				sql = "select * from DB where id ='" + txtId.getText() + "';";
 
 				rs = stmt.executeQuery(sql);
