@@ -37,6 +37,7 @@ public class LoginFrame extends JFrame implements MouseListener {
    ResultSet rs = null;
    String sql = null;
 
+   
    public static void main(String[] args) {
       EventQueue.invokeLater(new Runnable() {
          public void run() {
@@ -50,6 +51,8 @@ public class LoginFrame extends JFrame implements MouseListener {
       });
    }
 
+   
+   
    public LoginFrame() {
 
       setTitle("A4's To Do List");
@@ -106,6 +109,8 @@ public class LoginFrame extends JFrame implements MouseListener {
 
       JButton okbutton = new JButton("»Æ¿Œ");
       okbutton.setFont(new Font("∏º¿∫ ∞ÌµÒ", Font.PLAIN, 14));
+      
+      
       okbutton.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
             try {
