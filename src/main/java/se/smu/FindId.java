@@ -56,6 +56,8 @@ public class FindId extends JFrame implements MouseListener {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		
 
 		JLabel lblNewLabel = new JLabel("To do List");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);
@@ -86,6 +88,8 @@ public class FindId extends JFrame implements MouseListener {
 		btn2.setFont(new Font("¸¼Àº °íµñ", Font.PLAIN, 20));
 		contentPane.add(btn2);
 		namefield.addMouseListener(this);
+		
+		
 
 		btn2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
