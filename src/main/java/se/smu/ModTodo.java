@@ -24,16 +24,11 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.SwingConstants;
 import java.util.*;
 
-@SuppressWarnings("serial")
 public class ModTodo extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTextField textField_2;
-	Connection conn = null;
-	Statement stmt = null;
-	ResultSet rs = null;
-	String sql = null;
 
 	/**
 	 * Launch the application.
@@ -43,7 +38,7 @@ public class ModTodo extends JFrame {
 			public void run() {
 
 				try {
-					AddTodo frame = new AddTodo();
+					ModTodo frame = new ModTodo();
 					frame.setVisible(true);
 
 				} catch (Exception e) {
@@ -75,12 +70,16 @@ public class ModTodo extends JFrame {
 
 			String to = transFormat.format(c1.getTime());
 			array[i] = to;
+			// System.out.println(array[i]);
 
 			c1.add(Calendar.DATE, 1);
 			i++;
 			if (i == 31)
 				break;
 		}
+
+		// for(i=0; i<31; i++)
+		// System.out.println(array[i]);
 
 		return array;
 	}
@@ -134,7 +133,7 @@ public class ModTodo extends JFrame {
 		deadline.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
 		panel.add(deadline);
 
-		final JComboBox<Object> deadlinecomboBox = new JComboBox<Object>(today);
+		JComboBox<Object> deadlinecomboBox = new JComboBox<Object>(today);
 		deadlinecomboBox.setBounds(126, 144, 146, 24);
 		panel.add(deadlinecomboBox);
 
@@ -143,7 +142,7 @@ public class ModTodo extends JFrame {
 		realdeadline.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
 		panel.add(realdeadline);
 
-		final JComboBox<Object> realdeadlinecomboBox = new JComboBox<Object>(today);
+		JComboBox<Object> realdeadlinecomboBox = new JComboBox<Object>(today);
 		realdeadlinecomboBox.setBounds(126, 183, 146, 24);
 		panel.add(realdeadlinecomboBox);
 
@@ -152,7 +151,7 @@ public class ModTodo extends JFrame {
 		label_2.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
 		panel.add(label_2);
 
-		final JComboBox<Object> importancecomboBox = new JComboBox<Object>();
+		JComboBox<Object> importancecomboBox = new JComboBox<Object>();
 		importancecomboBox.setModel(new DefaultComboBoxModel<Object>(new String[] { "1", "2", "3", "4", "5" }));
 		importancecomboBox.setBounds(126, 223, 146, 24);
 		panel.add(importancecomboBox);
@@ -162,7 +161,7 @@ public class ModTodo extends JFrame {
 		lblNewLabel_3.setBounds(41, 257, 91, 24);
 		panel.add(lblNewLabel_3);
 
-		final JComboBox<Object> completecomboBox = new JComboBox<Object>();
+		JComboBox<Object> completecomboBox = new JComboBox<Object>();
 		completecomboBox.setModel(new DefaultComboBoxModel<Object>(new String[] { "X", "O" }));
 		completecomboBox.setBounds(41, 293, 91, 24);
 		panel.add(completecomboBox);
@@ -172,19 +171,22 @@ public class ModTodo extends JFrame {
 		percentlabel.setBounds(167, 259, 91, 24);
 		panel.add(percentlabel);
 
-		final JComboBox<Object> percentcomboBox = new JComboBox<Object>();
+		JComboBox<Object> percentcomboBox = new JComboBox<Object>();
 		percentcomboBox.setModel(new DefaultComboBoxModel<Object>(new String[] { "0%", "25%", "50%", "75%", "100%" }));
 		percentcomboBox.setBounds(167, 293, 91, 24);
 		panel.add(percentcomboBox);
 
-		final JButton okbutton = new JButton("저장");
+		JButton okbutton = new JButton("저장");
 		okbutton.setBounds(41, 339, 91, 27);
 		okbutton.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
 		panel.add(okbutton);
 
 		okbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				Connection conn = null;
+				Statement stmt = null;
+				ResultSet rs = null;
+				String sql = null;
 				if (textField.getText().equals(""))
 					JOptionPane.showMessageDialog(null, "과목명을 기입해주세요");
 				else {
@@ -193,6 +195,13 @@ public class ModTodo extends JFrame {
 						// Open a connection
 						conn = DriverManager.getConnection("jdbc:mysql://localhost/mydb", "root", "root");
 						stmt = conn.createStatement();
+						// 테이블 생성 전이면 주석 풀기
+						// sql = "create table Todo(Todoname varchar(20), Subjectname varchar(20),
+						// Deadline varchar(20) ,Realdeadline varchar(20), Importance varchar(20),finish
+						// varchar(20),Progressrate varchar(20),foreign key(Subjectname) references
+						// Subject(Subjectname));";
+						// stmt.executeUpdate(sql);
+						System.out.println("테이블을 생성했습니다.");
 
 						if (e.getSource().equals(okbutton)) {
 							sql = "select * from Todo where Subjectname ='" + textField.getText() + "';";
@@ -205,10 +214,11 @@ public class ModTodo extends JFrame {
 
 								sql = "Update Todo Set Todoname='" + textField_2.getText() + "',Subjectname='"
 										+ textField.getText() + "',deadline='" + deadlinecomboBox.getSelectedItem()
-										+ "',readldeadline='" + realdeadlinecomboBox.getSelectedItem()
-										+ "',importance='" + importancecomboBox.getSelectedItem() + "',finish='"
+										+ "',realdeadline='" + realdeadlinecomboBox.getSelectedItem() + "',importance='"
+										+ importancecomboBox.getSelectedItem() + "',finish='"
 										+ completecomboBox.getSelectedItem() + "',progressrate='"
-										+ percentcomboBox.getSelectedItem() + "';";
+										+ percentcomboBox.getSelectedItem() + "'where Subjectname='"
+										+ textField.getText() + "'and Todoname='" + textField_2.getText() + "';";
 
 								stmt.executeUpdate(sql);
 								JOptionPane.showMessageDialog(null, "할일 수정이 완료 되었습니다.");
