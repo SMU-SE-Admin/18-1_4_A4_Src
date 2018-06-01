@@ -133,7 +133,7 @@ public class ModTodo extends JFrame {
 		deadline.setFont(new Font("∏º¿∫ ∞ÌµÒ", Font.PLAIN, 20));
 		panel.add(deadline);
 
-		JComboBox<Object> deadlinecomboBox = new JComboBox<Object>(today);
+		final JComboBox<Object> deadlinecomboBox = new JComboBox<Object>(today);
 		deadlinecomboBox.setBounds(126, 144, 146, 24);
 		panel.add(deadlinecomboBox);
 
@@ -142,7 +142,7 @@ public class ModTodo extends JFrame {
 		realdeadline.setFont(new Font("∏º¿∫ ∞ÌµÒ", Font.PLAIN, 20));
 		panel.add(realdeadline);
 
-		JComboBox<Object> realdeadlinecomboBox = new JComboBox<Object>(today);
+		final JComboBox<Object> realdeadlinecomboBox = new JComboBox<Object>(today);
 		realdeadlinecomboBox.setBounds(126, 183, 146, 24);
 		panel.add(realdeadlinecomboBox);
 
@@ -151,7 +151,7 @@ public class ModTodo extends JFrame {
 		label_2.setFont(new Font("∏º¿∫ ∞ÌµÒ", Font.PLAIN, 20));
 		panel.add(label_2);
 
-		JComboBox<Object> importancecomboBox = new JComboBox<Object>();
+		final JComboBox<Object> importancecomboBox = new JComboBox<Object>();
 		importancecomboBox.setModel(new DefaultComboBoxModel<Object>(new String[] { "1", "2", "3", "4", "5" }));
 		importancecomboBox.setBounds(126, 223, 146, 24);
 		panel.add(importancecomboBox);
@@ -161,7 +161,7 @@ public class ModTodo extends JFrame {
 		lblNewLabel_3.setBounds(41, 257, 91, 24);
 		panel.add(lblNewLabel_3);
 
-		JComboBox<Object> completecomboBox = new JComboBox<Object>();
+		final JComboBox<Object> completecomboBox = new JComboBox<Object>();
 		completecomboBox.setModel(new DefaultComboBoxModel<Object>(new String[] { "X", "O" }));
 		completecomboBox.setBounds(41, 293, 91, 24);
 		panel.add(completecomboBox);
@@ -171,12 +171,12 @@ public class ModTodo extends JFrame {
 		percentlabel.setBounds(167, 259, 91, 24);
 		panel.add(percentlabel);
 
-		JComboBox<Object> percentcomboBox = new JComboBox<Object>();
+		final JComboBox<Object> percentcomboBox = new JComboBox<Object>();
 		percentcomboBox.setModel(new DefaultComboBoxModel<Object>(new String[] { "0%", "25%", "50%", "75%", "100%" }));
 		percentcomboBox.setBounds(167, 293, 91, 24);
 		panel.add(percentcomboBox);
 
-		JButton okbutton = new JButton("¿˙¿Â");
+		final JButton okbutton = new JButton("¿˙¿Â");
 		okbutton.setBounds(41, 339, 91, 27);
 		okbutton.setFont(new Font("∏º¿∫ ∞ÌµÒ", Font.PLAIN, 20));
 		panel.add(okbutton);
