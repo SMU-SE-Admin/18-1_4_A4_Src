@@ -90,7 +90,7 @@ public class ModSubject extends JFrame {
       label_2.setBounds(14, 218, 88, 27);
       panel.add(label_2);
 
-      JComboBox<Object> comboBox_2 = new JComboBox<Object>();
+      final JComboBox<Object> comboBox_2 = new JComboBox<Object>();
       comboBox_2.setModel(new DefaultComboBoxModel<Object>(new String[] { "월", "화", "수", "목", "금", "토", "일" }));
       comboBox_2.setBounds(116, 183, 65, 24);
       panel.add(comboBox_2);
@@ -109,7 +109,7 @@ public class ModSubject extends JFrame {
       btnNewButton.setBounds(172, 275, 91, 27);
       panel.add(btnNewButton);
 
-      JButton button = new JButton("확인");
+      final JButton button = new JButton("확인");
       button.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
       button.setBounds(54, 275, 91, 27);
       panel.add(button);
@@ -125,19 +125,19 @@ public class ModSubject extends JFrame {
       panel.add(textField_1);
 
       
-      JComboBox<Object> comboBox = new JComboBox<Object>();
+      final JComboBox<Object> comboBox = new JComboBox<Object>();
       comboBox.setModel(new DefaultComboBoxModel<Object>(new String[] { "9:00", "10:00", "11:00", "12:00", "13:00",
             "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", }));
 
       comboBox.setBounds(207, 183, 65, 24);
       panel.add(comboBox);
 
-      JComboBox<Object> comboBox_1 = new JComboBox<Object>();
+      final JComboBox<Object> comboBox_1 = new JComboBox<Object>();
       comboBox_1.setModel(new DefaultComboBoxModel<Object>(new String[] { "2018", "2019", "2020", "2021" }));
       comboBox_1.setBounds(116, 223, 65, 24);
       panel.add(comboBox_1);
 
-      JComboBox<Object> comboBox_3 = new JComboBox<Object>();
+      final JComboBox<Object> comboBox_3 = new JComboBox<Object>();
       comboBox_3.setModel(new DefaultComboBoxModel<Object>(new String[] { "1학기", "2학기" }));
       comboBox_3.setBounds(207, 223, 65, 24);
       panel.add(comboBox_3);
