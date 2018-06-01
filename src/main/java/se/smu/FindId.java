@@ -79,7 +79,7 @@ public class FindId extends JFrame implements MouseListener {
 		namefield.setBounds(150, 180, 170, 50);
 		namefield.setFont(new Font("∏º¿∫ ∞ÌµÒ", Font.PLAIN, 15));
 		contentPane.add(namefield);
-		JButton btn1 = new JButton("»Æ¿Œ");
+		final JButton btn1 = new JButton("»Æ¿Œ");
 		btn1.setBounds(110, 330, 90, 50);
 		btn1.setFont(new Font("∏º¿∫ ∞ÌµÒ", Font.PLAIN, 20));
 		contentPane.add(btn1);
