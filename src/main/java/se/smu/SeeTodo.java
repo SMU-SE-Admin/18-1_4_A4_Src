@@ -123,7 +123,7 @@ public class SeeTodo extends JFrame {
 			}
 		});
 
-		JButton hidebutton = new JButton("¼û±â±â");
+		final JButton hidebutton = new JButton("¼û±â±â");
 		hidebutton.setBounds(339, 23, 105, 27);
 		contentPane.add(hidebutton);
 		hidebutton.addActionListener(new ActionListener() {
