@@ -23,6 +23,7 @@ import javax.swing.JTextField;
 
 import java.awt.Color;
 
+@SuppressWarnings("serial")
 public class ModSubject extends JFrame {
 
    private JPanel contentPane;
@@ -104,6 +105,7 @@ public class ModSubject extends JFrame {
 
          }
       });
+      
       btnNewButton.setBounds(172, 275, 91, 27);
       panel.add(btnNewButton);
 
@@ -122,6 +124,7 @@ public class ModSubject extends JFrame {
       textField_1.setBounds(118, 144, 154, 24);
       panel.add(textField_1);
 
+      
       JComboBox<Object> comboBox = new JComboBox<Object>();
       comboBox.setModel(new DefaultComboBoxModel<Object>(new String[] { "9:00", "10:00", "11:00", "12:00", "13:00",
             "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", }));
@@ -138,6 +141,7 @@ public class ModSubject extends JFrame {
       comboBox_3.setModel(new DefaultComboBoxModel<Object>(new String[] { "1학기", "2학기" }));
       comboBox_3.setBounds(207, 223, 65, 24);
       panel.add(comboBox_3);
+      
       button.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
             Connection conn = null;
